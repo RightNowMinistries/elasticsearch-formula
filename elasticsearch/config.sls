@@ -15,7 +15,15 @@ elasticsearch_cfg:
 {% set data_dir = salt['pillar.get']('elasticsearch:config:path.data') %}
 {% set log_dir = salt['pillar.get']('elasticsearch:config:path.logs') %}
 
-{% for dir in (data_dir, log_dir) %}
+{% if data_dir is not iterable %}
+  {% set dirs = [data_dir] %}
+{% else %}
+  {% set dirs = data_dir %}
+{% endif %}
+
+{% do dirs.append(log_dir) %}
+
+{% for dir in dirs %}
 {% if dir %}
 {{ dir }}:
   file.directory:
