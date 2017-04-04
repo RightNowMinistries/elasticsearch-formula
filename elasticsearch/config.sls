@@ -21,8 +21,6 @@ elasticsearch_cfg:
   {% set dirs = data_dir %}
 {% endif %}
 
-{% do dirs.append(log_dir) %}
-
 {% for dir in dirs %}
 {% if dir %}
 {{ dir }}:
@@ -33,3 +31,10 @@ elasticsearch_cfg:
     - makedirs: True
 {% endif %}
 {% endfor %}
+
+{{ log_dir }}:
+  file.directory:
+    - user: elasticsearch
+    - group: elasticsearch
+    - mode: 0700
+    - makedirs: True
