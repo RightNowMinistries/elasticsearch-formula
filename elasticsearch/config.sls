@@ -33,8 +33,9 @@ elasticsearch_cfg:
 {% endfor %}
 
 {% if log_dir %}
-{{ log_dir }}:
+elasticsearch_log_dir:
   file.directory:
+    - name: {{ log_dir }}
     - user: elasticsearch
     - group: elasticsearch
     - mode: 0700
