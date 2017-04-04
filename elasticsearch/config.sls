@@ -32,9 +32,11 @@ elasticsearch_cfg:
 {% endif %}
 {% endfor %}
 
+{% if log_dir %}
 {{ log_dir }}:
   file.directory:
     - user: elasticsearch
     - group: elasticsearch
     - mode: 0700
     - makedirs: True
+{% endif %}
