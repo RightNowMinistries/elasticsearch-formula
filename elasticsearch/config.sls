@@ -12,16 +12,10 @@ elasticsearch_cfg:
       - sls: elasticsearch.pkg
 {%- endif %}
 
-{% set data_dir = salt['pillar.get']('elasticsearch:config:path.data') %}
+{% set data_dirs = salt['pillar.get']('elasticsearch:config:path.data') %}
 {% set log_dir = salt['pillar.get']('elasticsearch:config:path.logs') %}
 
-{% if data_dir is not iterable %}
-  {% set dirs = [data_dir] %}
-{% else %}
-  {% set dirs = data_dir %}
-{% endif %}
-
-{% for dir in dirs %}
+{% for dir in data_dirs %}
 {% if dir %}
 {{ dir }}:
   file.directory:
