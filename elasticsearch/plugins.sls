@@ -1,5 +1,6 @@
 include:
   - elasticsearch.pkg
+  - elasticsearch.service
 
 
 {%- set major_version = salt['pillar.get']('elasticsearch:major_version', 2) %}
@@ -17,5 +18,7 @@ elasticsearch-{{ name }}:
     - name: /usr/share/elasticsearch/bin/{{ plugin_bin }} install -b {{ repo }}
     - require:
       - sls: elasticsearch.pkg
+    - watch_in:
+      - service: elasticsearch_service
     - unless: test -x /usr/share/elasticsearch/plugins/{{ name }}
 {% endfor %}
