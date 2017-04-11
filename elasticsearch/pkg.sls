@@ -8,6 +8,6 @@ include:
 elasticsearch_pkg:
   pkg.installed:
     - name: {{ elasticsearch.pkg }}
-    - version: {{ major_version }}.*
+    - version: {{ elasticsearch.pkg_version }}
     - require:
       - sls: elasticsearch.repo

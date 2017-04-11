@@ -5,3 +5,4 @@ include:
   - elasticsearch.sysconfig
   - elasticsearch.service
   - elasticsearch.plugins
+  - elasticsearch.indexretention

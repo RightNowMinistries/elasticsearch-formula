@@ -1,6 +1,7 @@
 {% set elasticsearch = salt['grains.filter_by']({
     'default': {
         'pkg': 'elasticsearch',
+        'pkg_version': 'latest'
     },
 },
 merge=salt['pillar.get']('elasticsearch:lookup', {}),

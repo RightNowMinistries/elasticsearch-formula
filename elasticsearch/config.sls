@@ -12,18 +12,10 @@ elasticsearch_cfg:
       - sls: elasticsearch.pkg
 {%- endif %}
 
-{% set data_dir = salt['pillar.get']('elasticsearch:config:path.data') %}
+{% set data_dirs = salt['pillar.get']('elasticsearch:config:path.data') %}
 {% set log_dir = salt['pillar.get']('elasticsearch:config:path.logs') %}
 
-{% if data_dir is not iterable %}
-  {% set dirs = [data_dir] %}
-{% else %}
-  {% set dirs = data_dir %}
-{% endif %}
-
-{% do dirs.append(log_dir) %}
-
-{% for dir in dirs %}
+{% for dir in data_dirs %}
 {% if dir %}
 {{ dir }}:
   file.directory:
@@ -33,3 +25,13 @@ elasticsearch_cfg:
     - makedirs: True
 {% endif %}
 {% endfor %}
+
+{% if log_dir %}
+elasticsearch_log_dir:
+  file.directory:
+    - name: {{ log_dir }}
+    - user: elasticsearch
+    - group: elasticsearch
+    - mode: 0700
+    - makedirs: True
+{% endif %}
